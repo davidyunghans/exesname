@@ -1,0 +1,20 @@
+# Rate Your Exes Name
+
+A tiny, playful Next.js app for giving your exes the titles they deserve.
+
+## Run locally
+
+```bash
+npm install
+npm run dev
+```
+
+Then open [http://localhost:3000](http://localhost:3000).
+
+## Scripts
+
+- `npm run dev` — start the development server
+- `npm run build` — create a production build
+- `npm run start` — serve the production build
+
+This project uses Next.js, React, and plain JavaScript. It is ready to push to a new GitHub repository.
