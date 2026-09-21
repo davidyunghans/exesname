@@ -15,6 +15,19 @@ const roasts = [
   "A motherfucking disaster with Wi-Fi. No apology, no closure, no encore — let that bitch perform for somebody else."
 ];
 
+const followups = [
+  "ahhh hellll no... what did this bitch do to you?",
+  "oh absolutely the fuck not... what happened with this menace?",
+  "wait. pause. hand me the emotional evidence... what did they do?",
+  "oh they have GOT to be kidding... tell me what this bitch pulled.",
+  "be so fucking serious right now... what fresh hell did they unleash?",
+  "not the audacity olympics champion... what did this clown do to you?",
+  "hold my imaginary earrings... what did this motherfucker do?",
+  "yikes on several damn bikes... tell me everything.",
+  "deploying the emergency exorcism team... what happened?",
+  "that is violently suspicious... what crime against your peace did they commit?"
+];
+
 export default function Home() {
   const [name, setName] = useState("");
   const [story, setStory] = useState("");
@@ -22,11 +35,13 @@ export default function Home() {
   const [status, setStatus] = useState("idle");
   const [roast, setRoast] = useState("");
   const [followupRoast, setFollowupRoast] = useState("");
+  const [followupPrompt, setFollowupPrompt] = useState(followups[0]);
 
   useEffect(() => {
     if (status !== "thinking") return undefined;
     const timer = setTimeout(() => {
       setRoast(roasts[Math.floor(Math.random() * roasts.length)]);
+      setFollowupPrompt(followups[Math.floor(Math.random() * followups.length)]);
       setStatus("complete");
     }, 1800);
     return () => clearTimeout(timer);
@@ -66,7 +81,7 @@ export default function Home() {
         </form>
       )}
       {status === "thinking" && <section className="response" aria-live="polite"><p>getting ready to defend you from {submittedName}...</p><span className="dots">...</span></section>}
-      {status === "complete" && <section className="response result" aria-live="polite"><p className="result-name">{submittedName}</p><h1>{roast}</h1><form className="followup-form" onSubmit={submitStory}><label htmlFor="ex-story">what did this bitch do to you?</label><input autoFocus id="ex-story" value={story} onChange={(event) => setStory(event.target.value)} placeholder="tell me everything" /></form><button type="button" onClick={startOver}>rate another ex</button></section>}
+      {status === "complete" && <section className="response result" aria-live="polite"><p className="result-name">{submittedName}</p><h1>{roast}</h1><form className="followup-form" onSubmit={submitStory}><label htmlFor="ex-story">{followupPrompt}</label><input autoFocus id="ex-story" value={story} onChange={(event) => setStory(event.target.value)} placeholder="tell me everything" /></form><button type="button" onClick={startOver}>rate another ex</button></section>}
       {status === "final" && <section className="response result" aria-live="polite"><p className="result-name">{submittedName}</p><h1>{followupRoast}</h1><button type="button" onClick={startOver}>rate another ex</button></section>}
     </main>
   );
