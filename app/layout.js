@@ -2,7 +2,7 @@ import "./globals.css";
 
 export const metadata = {
   title: "Rate Your Exes Name",
-  description: "Find the perfect name for your next ex."
+  description: "A tiny roast machine for your exes."
 };
 
 export default function RootLayout({ children }) {
