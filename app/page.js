@@ -21,6 +21,7 @@ export default function Home() {
   const [submittedName, setSubmittedName] = useState("");
   const [status, setStatus] = useState("idle");
   const [roast, setRoast] = useState("");
+  const [followupRoast, setFollowupRoast] = useState("");
 
   useEffect(() => {
     if (status !== "thinking") return undefined;
@@ -37,20 +38,22 @@ export default function Home() {
     if (!cleanName) return;
     setSubmittedName(cleanName);
     setName("");
-    setStatus("followup");
+    setStatus("thinking");
   }
 
   function submitStory(event) {
     event.preventDefault();
     if (!story.trim()) return;
     setStory("");
-    setStatus("thinking");
+    setFollowupRoast(roasts[Math.floor(Math.random() * roasts.length)]);
+    setStatus("final");
   }
 
   function startOver() {
     setSubmittedName("");
     setStory("");
     setRoast("");
+    setFollowupRoast("");
     setStatus("idle");
   }
 
@@ -62,14 +65,9 @@ export default function Home() {
           <input autoFocus id="ex-name" value={name} onChange={(event) => setName(event.target.value)} placeholder="type here" />
         </form>
       )}
-      {status === "followup" && (
-        <form className="name-form" onSubmit={submitStory}>
-          <label htmlFor="ex-story">what did this bitch do to you?</label>
-          <input autoFocus id="ex-story" value={story} onChange={(event) => setStory(event.target.value)} placeholder="tell me everything" />
-        </form>
-      )}
       {status === "thinking" && <section className="response" aria-live="polite"><p>getting ready to defend you from {submittedName}...</p><span className="dots">...</span></section>}
-      {status === "complete" && <section className="response result" aria-live="polite"><p className="result-name">{submittedName}</p><h1>{roast}</h1><button type="button" onClick={startOver}>rate another ex</button></section>}
+      {status === "complete" && <section className="response result" aria-live="polite"><p className="result-name">{submittedName}</p><h1>{roast}</h1><form className="followup-form" onSubmit={submitStory}><label htmlFor="ex-story">what did this bitch do to you?</label><input autoFocus id="ex-story" value={story} onChange={(event) => setStory(event.target.value)} placeholder="tell me everything" /></form><button type="button" onClick={startOver}>rate another ex</button></section>}
+      {status === "final" && <section className="response result" aria-live="polite"><p className="result-name">{submittedName}</p><h1>{followupRoast}</h1><button type="button" onClick={startOver}>rate another ex</button></section>}
     </main>
   );
 }
