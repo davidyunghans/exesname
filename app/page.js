@@ -15,33 +15,35 @@ const followups = [
   "that is violently suspicious... what crime against your peace did they commit?"
 ];
 
-const curseWords = ["fuck", "fucker", "bitch", "shit", "asshole", "motherfucker", "damn", "puta madre"];
-const villainParts = [
-  "ego-powered sewer goblin",
-  "discount heartbreak warlord",
-  "emotionally bankrupt clown prince",
-  "two-faced chaos gremlin",
-  "walking consequence machine",
-  "clearance-rack supervillain",
-  "red-flag crime scene"
+const roastStyles = [
+  ["🚨", "courtroom", "I am filing a class-action lawsuit against their entire personality", "the jury finds them guilty of wasting your damn time"],
+  ["🧯", "fire marshal", "that bitch is a four-alarm emotional grease fire", "evacuate the building and save your beautiful ass"],
+  ["🧙‍♀️", "witch trial", "their bullshit belongs in a cauldron labeled DO NOT REOPEN", "may their audacity trip over its own cape"],
+  ["🦈", "nature documentary", "a predatory little fucker circling anyone with a heart", "swim toward the shore, babe — the trash can drown alone"],
+  ["⚔️", "war council", "they brought a butter knife to your boundaries and called it a battle plan", "your peace just conquered their whole damn kingdom"],
+  ["🎪", "circus review", "the clown car of red flags finally rolled into town", "refund the ticket and leave that shitshow in the dust"],
+  ["🧪", "lab report", "the specimen is 98% ego, 2% apologies, and scientifically full of shit", "do not reintroduce this contaminant to your ecosystem"],
+  ["📢", "public service announcement", "that motherfucker is a walking warning label with Wi-Fi", "protect the public — block the number immediately"],
+  ["👑", "royal decree", "their tiny little kingdom runs on lies, tantrums, and bitch-made excuses", "you are hereby pardoned from giving a fuck"],
+  ["🧹", "hazmat cleanup", "we found traces of their bullshit all over your self-esteem", "sweep the bastard out and disinfect your standards"]
 ];
 
 function composeRoast(name, story, usedRoasts) {
-  const curse = curseWords[Math.floor(Math.random() * curseWords.length)];
-  const villain = villainParts[Math.floor(Math.random() * villainParts.length)];
-  const angle = story.toLowerCase().includes("lie")
-    ? "lying like a cheap damn politician"
-    : story.toLowerCase().includes("cheat")
-      ? "cheating like a cowardly fucking amateur"
-      : "weaponizing their bullshit like it is a full-time job";
+  const [emoji, voice, verdict, defense] = roastStyles[Math.floor(Math.random() * roastStyles.length)];
+  const lowerStory = story.toLowerCase();
+  const offense = lowerStory.includes("lie") || lowerStory.includes("truth")
+    ? "lying through their cheap-ass teeth"
+    : lowerStory.includes("cheat") || lowerStory.includes("another")
+      ? "cheating like a cowardly little fuck"
+      : lowerStory.includes("text") || lowerStory.includes("ghost")
+        ? "vanishing and reappearing like a bitch with a push notification"
+        : "weaponizing their bullshit like it is a goddamn career";
   const candidates = [
-    `${name} is a ${curse}-powered ${villain}, ${angle}. What a ${curse}ing embarrassment. You escaped that shitshow.`,
-    `Ahhh, ${curse} no. That ${villain} really thought their ${curse} behavior was a personality. Fuck that noise — you deserved peace.`,
-    `Verdict: ${name} is a certified ${curse}ing menace, a ${villain} with the audacity of a damn king. Bitch, exile them from your life.`,
-    `This ${curse}er brought ${angle}, then expected you to call it love. Absolutely ${curse}ing not. Your glow-up is their consequence.`,
-    `Puta madre, ${name} is a ${villain} assembled from bad choices, cheap excuses, and motherfucking audacity. Delete, block, bless the silence.`
+    `${emoji} ${voice.toUpperCase()}: ${name} is ${offense}. ${verdict}. ${defense}.`,
+    `${emoji} ahhh hell no — ${name} is ${offense}, then acting shocked when you stopped giving a fuck. ${verdict}. ${defense}.`,
+    `${emoji} breaking news: ${name} is ${offense}. What a motherfucking spectacle. ${verdict}; ${defense}.`
   ].filter((candidate) => !usedRoasts.current.has(candidate));
-  const result = candidates[Math.floor(Math.random() * candidates.length)] || `${name} is a ${curse}ing disaster. Fuck that — you are free now.`;
+  const result = candidates[Math.floor(Math.random() * candidates.length)] || `${emoji} ${name} is a fresh damn disaster. Fuck that — ${defense}.`;
   usedRoasts.current.add(result);
   return result;
 }
