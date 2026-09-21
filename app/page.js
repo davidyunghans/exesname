@@ -17,6 +17,7 @@ const roasts = [
 
 export default function Home() {
   const [name, setName] = useState("");
+  const [story, setStory] = useState("");
   const [submittedName, setSubmittedName] = useState("");
   const [status, setStatus] = useState("idle");
   const [roast, setRoast] = useState("");
@@ -36,11 +37,19 @@ export default function Home() {
     if (!cleanName) return;
     setSubmittedName(cleanName);
     setName("");
+    setStatus("followup");
+  }
+
+  function submitStory(event) {
+    event.preventDefault();
+    if (!story.trim()) return;
+    setStory("");
     setStatus("thinking");
   }
 
   function startOver() {
     setSubmittedName("");
+    setStory("");
     setRoast("");
     setStatus("idle");
   }
@@ -51,6 +60,12 @@ export default function Home() {
         <form className="name-form" onSubmit={submitName}>
           <label htmlFor="ex-name">what&apos;s ur exes name?</label>
           <input autoFocus id="ex-name" value={name} onChange={(event) => setName(event.target.value)} placeholder="type here" />
+        </form>
+      )}
+      {status === "followup" && (
+        <form className="name-form" onSubmit={submitStory}>
+          <label htmlFor="ex-story">what did this bitch do to you?</label>
+          <input autoFocus id="ex-story" value={story} onChange={(event) => setStory(event.target.value)} placeholder="tell me everything" />
         </form>
       )}
       {status === "thinking" && <section className="response" aria-live="polite"><p>getting ready to defend you from {submittedName}...</p><span className="dots">...</span></section>}
