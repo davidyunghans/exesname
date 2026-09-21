@@ -1,6 +1,6 @@
 # Rate Your Exes Name
 
-A tiny, playful Next.js app for giving your exes the titles they deserve.
+A tiny, playful Next.js app with a profanity-friendly roast agent for giving your exes the titles they deserve. It targets bad behavior and questionable choices, not protected traits or identity.
 
 ## Run locally
 
