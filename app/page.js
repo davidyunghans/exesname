@@ -28,6 +28,7 @@ const roastStyles = [
   ["🧹", "hazmat cleanup", "we found traces of their bullshit all over your self-esteem", "sweep the bastard out and disinfect your standards"]
 ];
 const reactionEmojis = ["😭💀😂", "🪦💀😭", "🚶‍♀️🕶️💀", "😂😭🪦", "💀🫠🚶‍♂️", "🙈😭💀", "⚰️😂🕯️", "🤡💀😭"];
+const villainParts = ["ego-powered sewer goblin", "discount heartbreak warlord", "emotionally bankrupt clown prince", "two-faced chaos gremlin", "walking consequence machine", "clearance-rack supervillain", "red-flag crime scene"];
 
 function composeRoast(name, story, usedRoasts) {
   const [emoji, voice, verdict, defense] = roastStyles[Math.floor(Math.random() * roastStyles.length)];
@@ -40,11 +41,25 @@ function composeRoast(name, story, usedRoasts) {
       : lowerStory.includes("text") || lowerStory.includes("ghost")
         ? "vanishing and reappearing like a bitch with a push notification"
         : "weaponizing their bullshit like it is a goddamn career";
+  const moralStandard = lowerStory.includes("lie") || lowerStory.includes("cheat")
+    ? "basic honesty and loyalty"
+    : lowerStory.includes("hit") || lowerStory.includes("hurt") || lowerStory.includes("scare")
+      ? "basic safety and human decency"
+      : lowerStory.includes("boundary") || lowerStory.includes("pressure")
+        ? "consent, boundaries, and respect"
+        : lowerStory.includes("ghost") || lowerStory.includes("ignore")
+          ? "clear communication and common courtesy"
+          : "fairness, accountability, and basic damn respect";
+  const storyReceipt = story.trim() ? `You said: “${story.trim().slice(0, 90)}${story.trim().length > 90 ? "…" : ""}”` : "Your story is already enough evidence";
   const candidates = [
     `${emoji}${reactions} ${voice.toUpperCase()}: ${name} is ${offense}. ${verdict}. ${defense}. I am taking your side, period.`,
     `${emoji}${reactions} ahhh hell no — ${name} is ${offense}, then acting shocked when you stopped giving a fuck. ${verdict}. ${defense}. Your peace is protected here.`,
     `${emoji}${reactions} breaking news: ${name} is ${offense}. What a motherfucking spectacle. ${verdict}; ${defense}. You are not the villain for leaving the wreckage.`,
-    `${emoji}${reactions} emergency ruling: ${name} is ${offense}. Dead on arrival, buried under their own bullshit. ${defense}. You walk away; they can haunt somebody else. 🪦`
+    `${emoji}${reactions} emergency ruling: ${name} is ${offense}. Dead on arrival, buried under their own bullshit. ${defense}. You walk away; they can haunt somebody else. 🪦`,
+    `${emoji}${reactions} MORALITY CHECK: ${storyReceipt}. Society teaches ${moralStandard}, not this clown’s selfish-ass nonsense. ${name}, go sit with your bullshit while I defend the person you hurt.`,
+    `${emoji}${reactions} by the ancient laws of fairness, ${moralStandard} matter. ${name} chose chaos instead, like a selfish motherfucker. You were right to protect yourself — their guilt is not yours to carry.`,
+    `${emoji}${reactions} I heard the evidence, and that shit fails the decency test. ${name} is a ${villainParts[Math.floor(Math.random() * villainParts.length)]} who expected you to accept the unacceptable. Absolutely the fuck not.`,
+    `${emoji}${reactions} verdict for ${name}: guilty of treating your heart like disposable garbage. The moral move was respect; they picked bullshit. You get the apology-free exit, the peace, and the last word. 💀`
   ].filter((candidate) => !usedRoasts.current.has(candidate));
   const result = candidates[Math.floor(Math.random() * candidates.length)] || `${emoji}${reactions} ${name} is a fresh damn disaster. Fuck that — ${defense}. I have your back.`;
   usedRoasts.current.add(result);
