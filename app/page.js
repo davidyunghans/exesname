@@ -29,10 +29,18 @@ const roastStyles = [
 ];
 const reactionEmojis = ["😭💀😂", "🪦💀😭", "🚶‍♀️🕶️💀", "😂😭🪦", "💀🫠🚶‍♂️", "🙈😭💀", "⚰️😂🕯️", "🤡💀😭"];
 const villainParts = ["ego-powered sewer goblin", "discount heartbreak warlord", "emotionally bankrupt clown prince", "two-faced chaos gremlin", "walking consequence machine", "clearance-rack supervillain", "red-flag crime scene"];
+const spiralTurns = [
+  "wait—no—actually, the more I say it, the worse it gets",
+  "and I was going to be reasonable, but then I remembered the audacity",
+  "hold on, hold on, because that is not even the worst part",
+  "nope, rewind that—this is bigger, dumber, and more bullshit than advertised",
+  "I am trying to stay calm. I am failing. Spectacularly."
+];
 
 function composeRoast(name, story, usedRoasts) {
   const [emoji, voice, verdict, defense] = roastStyles[Math.floor(Math.random() * roastStyles.length)];
   const reactions = reactionEmojis[Math.floor(Math.random() * reactionEmojis.length)];
+  const spiral = spiralTurns[Math.floor(Math.random() * spiralTurns.length)];
   const lowerStory = story.toLowerCase();
   const offense = lowerStory.includes("lie") || lowerStory.includes("truth")
     ? "lying through their cheap-ass teeth"
@@ -52,14 +60,14 @@ function composeRoast(name, story, usedRoasts) {
           : "fairness, accountability, and basic damn respect";
   const storyReceipt = story.trim() ? `You said: “${story.trim().slice(0, 90)}${story.trim().length > 90 ? "…" : ""}”` : "Your story is already enough evidence";
   const candidates = [
-    `${emoji}${reactions} ${voice.toUpperCase()}: ${name} is ${offense}. ${verdict}. ${defense}. I am taking your side, period.`,
-    `${emoji}${reactions} ahhh hell no — ${name} is ${offense}, then acting shocked when you stopped giving a fuck. ${verdict}. ${defense}. Your peace is protected here.`,
-    `${emoji}${reactions} breaking news: ${name} is ${offense}. What a motherfucking spectacle. ${verdict}; ${defense}. You are not the villain for leaving the wreckage.`,
-    `${emoji}${reactions} emergency ruling: ${name} is ${offense}. Dead on arrival, buried under their own bullshit. ${defense}. You walk away; they can haunt somebody else. 🪦`,
-    `${emoji}${reactions} MORALITY CHECK: ${storyReceipt}. Society teaches ${moralStandard}, not this clown’s selfish-ass nonsense. ${name}, go sit with your bullshit while I defend the person you hurt.`,
-    `${emoji}${reactions} by the ancient laws of fairness, ${moralStandard} matter. ${name} chose chaos instead, like a selfish motherfucker. You were right to protect yourself — their guilt is not yours to carry.`,
-    `${emoji}${reactions} I heard the evidence, and that shit fails the decency test. ${name} is a ${villainParts[Math.floor(Math.random() * villainParts.length)]} who expected you to accept the unacceptable. Absolutely the fuck not.`,
-    `${emoji}${reactions} verdict for ${name}: guilty of treating your heart like disposable garbage. The moral move was respect; they picked bullshit. You get the apology-free exit, the peace, and the last word. 💀`
+    `${emoji}${reactions} ${voice.toUpperCase()}: ${name} is ${offense}. ${spiral}—${verdict}. ${defense}. I am taking your side, period.`,
+    `${emoji}${reactions} ahhh hell no — ${name} is ${offense}, then acting shocked when you stopped giving a fuck. ${spiral}. ${verdict}. Your peace is protected here.`,
+    `${emoji}${reactions} breaking news: ${name} is ${offense}. What a motherfucking spectacle—no, genuinely, what the actual fuck. ${verdict}; ${defense}.`,
+    `${emoji}${reactions} emergency ruling: ${name} is ${offense}. Dead on arrival, buried under their own bullshit—buried, sealed, no return address. ${defense}. 🪦`,
+    `${emoji}${reactions} MORALITY CHECK: ${storyReceipt}. Society teaches ${moralStandard}, not this clown’s selfish-ass nonsense. ${spiral}, I am getting pissed all over again.`,
+    `${emoji}${reactions} by the ancient laws of fairness, ${moralStandard} matter. ${name} chose chaos instead, like a selfish motherfucker. You were right to protect yourself—and I mean right. RIGHT.`,
+    `${emoji}${reactions} I heard the evidence, and that shit fails the decency test. ${name} is a ${villainParts[Math.floor(Math.random() * villainParts.length)]} who expected you to accept the unacceptable. Absolutely the fuck not. Not today. Not ever.`,
+    `${emoji}${reactions} verdict for ${name}: guilty of treating your heart like disposable garbage. The moral move was respect; they picked bullshit. ${spiral}. You get the peace and the last word. 💀`
   ].filter((candidate) => !usedRoasts.current.has(candidate));
   const result = candidates[Math.floor(Math.random() * candidates.length)] || `${emoji}${reactions} ${name} is a fresh damn disaster. Fuck that — ${defense}. I have your back.`;
   usedRoasts.current.add(result);
