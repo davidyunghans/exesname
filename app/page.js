@@ -27,9 +27,11 @@ const roastStyles = [
   ["👑", "royal decree", "their tiny little kingdom runs on lies, tantrums, and bitch-made excuses", "you are hereby pardoned from giving a fuck"],
   ["🧹", "hazmat cleanup", "we found traces of their bullshit all over your self-esteem", "sweep the bastard out and disinfect your standards"]
 ];
+const reactionEmojis = ["😭💀😂", "🪦💀😭", "🚶‍♀️🕶️💀", "😂😭🪦", "💀🫠🚶‍♂️", "🙈😭💀", "⚰️😂🕯️", "🤡💀😭"];
 
 function composeRoast(name, story, usedRoasts) {
   const [emoji, voice, verdict, defense] = roastStyles[Math.floor(Math.random() * roastStyles.length)];
+  const reactions = reactionEmojis[Math.floor(Math.random() * reactionEmojis.length)];
   const lowerStory = story.toLowerCase();
   const offense = lowerStory.includes("lie") || lowerStory.includes("truth")
     ? "lying through their cheap-ass teeth"
@@ -39,11 +41,12 @@ function composeRoast(name, story, usedRoasts) {
         ? "vanishing and reappearing like a bitch with a push notification"
         : "weaponizing their bullshit like it is a goddamn career";
   const candidates = [
-    `${emoji} ${voice.toUpperCase()}: ${name} is ${offense}. ${verdict}. ${defense}.`,
-    `${emoji} ahhh hell no — ${name} is ${offense}, then acting shocked when you stopped giving a fuck. ${verdict}. ${defense}.`,
-    `${emoji} breaking news: ${name} is ${offense}. What a motherfucking spectacle. ${verdict}; ${defense}.`
+    `${emoji}${reactions} ${voice.toUpperCase()}: ${name} is ${offense}. ${verdict}. ${defense}. I am taking your side, period.`,
+    `${emoji}${reactions} ahhh hell no — ${name} is ${offense}, then acting shocked when you stopped giving a fuck. ${verdict}. ${defense}. Your peace is protected here.`,
+    `${emoji}${reactions} breaking news: ${name} is ${offense}. What a motherfucking spectacle. ${verdict}; ${defense}. You are not the villain for leaving the wreckage.`,
+    `${emoji}${reactions} emergency ruling: ${name} is ${offense}. Dead on arrival, buried under their own bullshit. ${defense}. You walk away; they can haunt somebody else. 🪦`
   ].filter((candidate) => !usedRoasts.current.has(candidate));
-  const result = candidates[Math.floor(Math.random() * candidates.length)] || `${emoji} ${name} is a fresh damn disaster. Fuck that — ${defense}.`;
+  const result = candidates[Math.floor(Math.random() * candidates.length)] || `${emoji}${reactions} ${name} is a fresh damn disaster. Fuck that — ${defense}. I have your back.`;
   usedRoasts.current.add(result);
   return result;
 }
