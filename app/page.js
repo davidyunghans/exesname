@@ -3,14 +3,14 @@
 import { useEffect, useState } from "react";
 
 const roasts = [
-  "A walking red flag with the emotional range of a damp sock.",
-  "The human equivalent of a group chat nobody wants to open.",
-  "A full-time disappointment with a part-time personality.",
-  "Proof that confidence and competence are not the same damn thing.",
-  "A low-budget villain whose biggest plot twist was having no plot.",
-  "The reason your standards needed a software update.",
-  "An unpaid internship in bad decisions, dressed like a person.",
-  "A spectacularly mediocre excuse for a text notification."
+  "A manipulative little shit in a human costume, leaving wreckage everywhere and calling it a personality.",
+  "The villain of every story they tell, somehow still convinced they are the hero. What a fucking clown.",
+  "A full-time emotional terrorist with the charm of a parking ticket and the self-awareness of a brick.",
+  "A selfish, lying disaster who treats accountability like it is a contagious disease.",
+  "The kind of asshole who sets the house on fire, blames the smoke, then asks why nobody applauded.",
+  "A low-budget supervillain powered entirely by ego, bad decisions, and an absolutely criminal lack of remorse.",
+  "A walking red flag with the emotional range of a damp sock and the audacity of a fucking monarch.",
+  "Proof that some people do not need a redemption arc. They need a consequence and a long timeout from everyone."
 ];
 
 export default function Home() {
