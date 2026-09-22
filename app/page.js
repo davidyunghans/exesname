@@ -101,6 +101,7 @@ function composeRoast(name, story, usedRoasts) {
 export default function Home() {
   const [name, setName] = useState("");
   const [story, setStory] = useState("");
+  const [submittedStory, setSubmittedStory] = useState("");
   const [submittedName, setSubmittedName] = useState("");
   const [status, setStatus] = useState("idle");
   const [roast, setRoast] = useState("");
@@ -111,7 +112,7 @@ export default function Home() {
   useEffect(() => {
     if (status !== "thinking") return undefined;
     const timer = setTimeout(() => {
-      setRoast(composeRoast(submittedName, "", usedRoasts));
+      setRoast(composeRoast(submittedName, submittedStory, usedRoasts));
       setFollowupPrompt(followups[Math.floor(Math.random() * followups.length)]);
       setStatus("complete");
     }, 1800);
@@ -120,9 +121,10 @@ export default function Home() {
 
   function submitName(event) {
     event.preventDefault();
-    const cleanName = name.trim();
-    if (!cleanName) return;
-    setSubmittedName(cleanName);
+    const cleanStory = name.trim();
+    if (!cleanStory) return;
+    setSubmittedName("your ex");
+    setSubmittedStory(cleanStory);
     setName("");
     setStatus("thinking");
   }
@@ -137,6 +139,7 @@ export default function Home() {
 
   function startOver() {
     setSubmittedName("");
+    setSubmittedStory("");
     setStory("");
     setRoast("");
     setFollowupRoast("");
@@ -147,12 +150,12 @@ export default function Home() {
     <main className="page-shell">
       {status === "idle" && (
         <form className="name-form" onSubmit={submitName}>
-          <label htmlFor="ex-name">what&apos;s ur exes name?</label>
-          <input autoFocus id="ex-name" value={name} onChange={(event) => setName(event.target.value)} placeholder="type here" />
+          <label htmlFor="ex-name">what did ur ex do?</label>
+          <input autoFocus id="ex-name" value={name} onChange={(event) => setName(event.target.value)} placeholder="tell me what happened" />
         </form>
       )}
       {status === "thinking" && <section className="response" aria-live="polite"><p>getting ready to defend you from {submittedName}...</p><span className="dots">...</span></section>}
-      {status === "complete" && <section className="response result" aria-live="polite"><p className="result-name">{submittedName}</p><h1>{roast}</h1><form className="followup-form" onSubmit={submitStory}><label htmlFor="ex-story">{followupPrompt}</label><input autoFocus id="ex-story" value={story} onChange={(event) => setStory(event.target.value)} placeholder="tell me everything" /></form><button type="button" onClick={startOver}>rate another ex</button></section>}
+      {status === "complete" && <section className="response result" aria-live="polite"><p className="result-name">the evidence has been reviewed</p><h1>{roast}</h1><form className="followup-form" onSubmit={submitStory}><label htmlFor="ex-story">{followupPrompt}</label><input autoFocus id="ex-story" value={story} onChange={(event) => setStory(event.target.value)} placeholder="add more evidence" /></form><button type="button" onClick={startOver}>roast another ex</button></section>}
       {status === "final" && <section className="response result" aria-live="polite"><p className="result-name">{submittedName}</p><h1>{followupRoast}</h1><button type="button" onClick={startOver}>rate another ex</button></section>}
     </main>
   );
