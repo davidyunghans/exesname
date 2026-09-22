@@ -8,6 +8,12 @@ button, input { font: inherit; }
 .name-form label { font-size: 14px; letter-spacing: .02em; text-transform: lowercase; }
 .name-form input { width: 100%; border: 0; border-bottom: 1px solid var(--black); outline: 0; background: transparent; color: var(--black); padding: 10px 0 14px; font-size: 20px; }
 .name-form input::placeholder { color: var(--black); opacity: .35; }
+.fine-print { margin: -8px 0 4px; font-size: 10px; opacity: .5; }
+.file-input { display: none; }
+.upload-button { border: 1px solid var(--black); padding: 14px 16px; cursor: pointer; text-align: center; font-size: 13px; }
+.upload-button:hover { background: var(--black); color: var(--bone); }
+.photo-preview { width: 140px; height: 140px; object-fit: cover; align-self: center; filter: grayscale(1); }
+.photo-form button { border: 1px solid var(--black); background: var(--black); color: var(--bone); padding: 14px 16px; cursor: pointer; font-size: 12px; }
 .response { width: min(560px, 100%); text-align: center; animation: appear .35s ease-out both; }
 .response p { margin: 0; font-size: 14px; }
 .dots { display: inline-block; margin-top: 18px; letter-spacing: .2em; animation: blink 1s steps(3, end) infinite; }

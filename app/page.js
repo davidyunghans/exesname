@@ -84,6 +84,8 @@ function composeRoast(name, story, usedRoasts) {
       ? "cheating like a cowardly little fuck"
       : lowerStory.includes("text") || lowerStory.includes("ghost")
         ? "vanishing and reappearing like a bitch with a push notification"
+        : lowerStory.includes("photo")
+          ? "serving a look that needs a damn software update"
         : defaultOffenses[Math.floor(Math.random() * defaultOffenses.length)];
   const moralStandard = lowerStory.includes("lie") || lowerStory.includes("cheat")
     ? "basic honesty and loyalty"
@@ -93,6 +95,8 @@ function composeRoast(name, story, usedRoasts) {
         ? "consent, boundaries, and respect"
         : lowerStory.includes("ghost") || lowerStory.includes("ignore")
           ? "clear communication and common courtesy"
+          : lowerStory.includes("photo")
+            ? "grooming, styling, and visual presentation"
           : "fairness, accountability, and basic damn respect";
   const storyReceipt = story.trim() ? `You said: “${story.trim().slice(0, 60)}${story.trim().length > 60 ? "…" : ""}”` : "Your story is already enough evidence";
   const format = compactFormats[Math.floor(Math.random() * compactFormats.length)];
@@ -117,6 +121,8 @@ function composeRoast(name, story, usedRoasts) {
 
 export default function Home() {
   const [name, setName] = useState("");
+  const [photo, setPhoto] = useState(null);
+  const [preview, setPreview] = useState("");
   const [story, setStory] = useState("");
   const [submittedStory, setSubmittedStory] = useState("");
   const [submittedName, setSubmittedName] = useState("");
@@ -146,6 +152,21 @@ export default function Home() {
     setStatus("thinking");
   }
 
+  function choosePhoto(event) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    setPhoto(file);
+    setPreview(URL.createObjectURL(file));
+  }
+
+  function submitPhoto(event) {
+    event.preventDefault();
+    if (!photo) return;
+    setSubmittedName("the latest fling");
+    setSubmittedStory("photo-based style and presentation review");
+    setStatus("thinking");
+  }
+
   function submitStory(event) {
     event.preventDefault();
     if (!story.trim()) return;
@@ -157,6 +178,8 @@ export default function Home() {
   function startOver() {
     setSubmittedName("");
     setSubmittedStory("");
+    setPhoto(null);
+    setPreview("");
     setStory("");
     setRoast("");
     setFollowupRoast("");
@@ -166,9 +189,13 @@ export default function Home() {
   return (
     <main className="page-shell">
       {status === "idle" && (
-        <form className="name-form" onSubmit={submitName}>
-          <label htmlFor="ex-name">what did ur ex do?</label>
-          <input autoFocus id="ex-name" value={name} onChange={(event) => setName(event.target.value)} placeholder="tell me what happened" />
+        <form className="name-form photo-form" onSubmit={submitPhoto}>
+          <label htmlFor="ex-photo">upload the latest ex / fling</label>
+          <p className="fine-print">for entertainment only · rates style and presentation, not identity</p>
+          <label className="upload-button" htmlFor="ex-photo">{photo ? "photo selected — rate them" : "choose a photo"}</label>
+          <input className="file-input" accept="image/*" id="ex-photo" type="file" onChange={choosePhoto} />
+          {preview && <img className="photo-preview" src={preview} alt="Selected ex or fling" />}
+          {photo && <button type="submit">rate by MTN standards →</button>}
         </form>
       )}
       {status === "thinking" && <section className="response" aria-live="polite"><p>getting ready to defend you from {submittedName}...</p><span className="dots">...</span></section>}
