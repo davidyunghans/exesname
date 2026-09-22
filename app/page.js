@@ -59,16 +59,22 @@ function composeRoast(name, story, usedRoasts) {
           ? "clear communication and common courtesy"
           : "fairness, accountability, and basic damn respect";
   const storyReceipt = story.trim() ? `You said: “${story.trim().slice(0, 90)}${story.trim().length > 90 ? "…" : ""}”` : "Your story is already enough evidence";
-  const candidates = [
+  const nameCandidates = [
     `${emoji}${reactions} ${voice.toUpperCase()}: ${name} is ${offense}. ${spiral}—${verdict}. ${defense}. I am taking your side, period.`,
     `${emoji}${reactions} ahhh hell no — ${name} is ${offense}, then acting shocked when you stopped giving a fuck. ${spiral}. ${verdict}. Your peace is protected here.`,
     `${emoji}${reactions} breaking news: ${name} is ${offense}. What a motherfucking spectacle—no, genuinely, what the actual fuck. ${verdict}; ${defense}.`,
-    `${emoji}${reactions} emergency ruling: ${name} is ${offense}. Dead on arrival, buried under their own bullshit—buried, sealed, no return address. ${defense}. 🪦`,
+    `${emoji}${reactions} emergency ruling: ${name} is ${offense}. Dead on arrival, buried under their own bullshit—buried, sealed, no return address. ${defense}. 🪦`
+  ];
+  const storyCandidates = [
     `${emoji}${reactions} MORALITY CHECK: ${storyReceipt}. Society teaches ${moralStandard}, not this clown’s selfish-ass nonsense. ${spiral}, I am getting pissed all over again.`,
+    `${emoji}${reactions} I read that and immediately lost the last three shreds of my composure. ${storyReceipt}. That is not ${moralStandard}; that is cruel, selfish, bullshit behavior. ${name}, what the fuck was your plan?`,
+    `${emoji}${reactions} let me translate this into plain English: ${storyReceipt}. A decent person would have chosen ${moralStandard}. This motherfucker chose damage instead. You are not overreacting—you are reacting to being treated like shit.`,
+    `${emoji}${reactions} the evidence says ${storyReceipt}. The verdict says ${name} violated ${moralStandard} and then expected you to swallow the blame too. Absolutely not, bitch. Hand that guilt back.`,
     `${emoji}${reactions} by the ancient laws of fairness, ${moralStandard} matter. ${name} chose chaos instead, like a selfish motherfucker. You were right to protect yourself—and I mean right. RIGHT.`,
-    `${emoji}${reactions} I heard the evidence, and that shit fails the decency test. ${name} is a ${villainParts[Math.floor(Math.random() * villainParts.length)]} who expected you to accept the unacceptable. Absolutely the fuck not. Not today. Not ever.`,
+    `${emoji}${reactions} I heard the evidence, and that shit fails the decency test. ${storyReceipt}. ${name} is a ${villainParts[Math.floor(Math.random() * villainParts.length)]} who expected you to accept the unacceptable. Absolutely the fuck not. Not today. Not ever.`,
     `${emoji}${reactions} verdict for ${name}: guilty of treating your heart like disposable garbage. The moral move was respect; they picked bullshit. ${spiral}. You get the peace and the last word. 💀`
-  ].filter((candidate) => !usedRoasts.current.has(candidate));
+  ];
+  const candidates = (story.trim() ? storyCandidates : nameCandidates).filter((candidate) => !usedRoasts.current.has(candidate));
   const result = candidates[Math.floor(Math.random() * candidates.length)] || `${emoji}${reactions} ${name} is a fresh damn disaster. Fuck that — ${defense}. I have your back.`;
   usedRoasts.current.add(result);
   return result;
