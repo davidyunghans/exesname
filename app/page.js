@@ -119,10 +119,29 @@ function composeRoast(name, story, usedRoasts) {
   return result;
 }
 
+function compareLooks(usedRoasts) {
+  const firstScore = Math.floor(Math.random() * 31) + 58;
+  const secondScore = Math.floor(Math.random() * 31) + 58;
+  const winner = firstScore >= secondScore ? "fling one" : "fling two";
+  const loser = firstScore >= secondScore ? "fling two" : "fling one";
+  const verdicts = [
+    `${winner} wins the visual audit by ${Math.abs(firstScore - secondScore)} points. ${loser} is serving “I got dressed during a fire drill.” 😭💀`,
+    `${winner} has the stronger fit, framing, and overall face-card presentation. ${loser} needs a mirror, a plan, and less confidence. 🪞💀`,
+    `The looksmaxxing tribunal has spoken: ${winner} is more put-together. ${loser} is giving “algorithmically generated situationship.” 😂🪦`,
+    `${winner} clears on styling and visual coherence. ${loser} is not ugly—the execution is just fighting for its life. 🚨😭`,
+    `Final ranking: ${winner} understood the assignment. ${loser} submitted a rough draft with audacity attached. 💀📉`
+  ];
+  const result = `MTN LOOKS AUDIT\n${winner}: ${firstScore >= secondScore ? firstScore : secondScore}/100\n${loser}: ${firstScore >= secondScore ? secondScore : firstScore}/100\n\n${verdicts[Math.floor(Math.random() * verdicts.length)]}`;
+  usedRoasts.current.add(result);
+  return result;
+}
+
 export default function Home() {
   const [name, setName] = useState("");
   const [photo, setPhoto] = useState(null);
   const [preview, setPreview] = useState("");
+  const [secondPhoto, setSecondPhoto] = useState(null);
+  const [secondPreview, setSecondPreview] = useState("");
   const [story, setStory] = useState("");
   const [submittedStory, setSubmittedStory] = useState("");
   const [submittedName, setSubmittedName] = useState("");
@@ -135,8 +154,7 @@ export default function Home() {
   useEffect(() => {
     if (status !== "thinking") return undefined;
     const timer = setTimeout(() => {
-      setRoast(composeRoast(submittedName, submittedStory, usedRoasts));
-      setFollowupPrompt(followups[Math.floor(Math.random() * followups.length)]);
+      setRoast(submittedStory === "looksmaxxing" ? compareLooks(usedRoasts) : composeRoast(submittedName, submittedStory, usedRoasts));
       setStatus("complete");
     }, 1800);
     return () => clearTimeout(timer);
@@ -159,11 +177,18 @@ export default function Home() {
     setPreview(URL.createObjectURL(file));
   }
 
+  function chooseSecondPhoto(event) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    setSecondPhoto(file);
+    setSecondPreview(URL.createObjectURL(file));
+  }
+
   function submitPhoto(event) {
     event.preventDefault();
-    if (!photo) return;
-    setSubmittedName("the latest fling");
-    setSubmittedStory("photo-based style and presentation review");
+    if (!photo || !secondPhoto) return;
+    setSubmittedName("the last two flings");
+    setSubmittedStory("looksmaxxing");
     setStatus("thinking");
   }
 
@@ -180,6 +205,8 @@ export default function Home() {
     setSubmittedStory("");
     setPhoto(null);
     setPreview("");
+    setSecondPhoto(null);
+    setSecondPreview("");
     setStory("");
     setRoast("");
     setFollowupRoast("");
@@ -190,16 +217,19 @@ export default function Home() {
     <main className="page-shell">
       {status === "idle" && (
         <form className="name-form photo-form" onSubmit={submitPhoto}>
-          <label htmlFor="ex-photo">upload the latest ex / fling</label>
-          <p className="fine-print">for entertainment only · rates style and presentation, not identity</p>
-          <label className="upload-button" htmlFor="ex-photo">{photo ? "photo selected — rate them" : "choose a photo"}</label>
+          <label htmlFor="ex-photo">upload your last two flings</label>
+          <p className="fine-print">for entertainment only · playful looksmaxxing-style presentation comparison</p>
+          <label className="upload-button" htmlFor="ex-photo">{photo ? "fling one selected" : "choose fling one"}</label>
           <input className="file-input" accept="image/*" id="ex-photo" type="file" onChange={choosePhoto} />
           {preview && <img className="photo-preview" src={preview} alt="Selected ex or fling" />}
-          {photo && <button type="submit">rate by MTN standards →</button>}
+          <label className="upload-button" htmlFor="ex-photo-two">{secondPhoto ? "fling two selected" : "choose fling two"}</label>
+          <input className="file-input" accept="image/*" id="ex-photo-two" type="file" onChange={chooseSecondPhoto} />
+          {secondPreview && <img className="photo-preview" src={secondPreview} alt="Second selected ex or fling" />}
+          {photo && secondPhoto && <button type="submit">compare their looks →</button>}
         </form>
       )}
       {status === "thinking" && <section className="response" aria-live="polite"><p>getting ready to defend you from {submittedName}...</p><span className="dots">...</span></section>}
-      {status === "complete" && <section className="response result" aria-live="polite"><p className="result-name">the evidence has been reviewed</p><h1>{roast}</h1><form className="followup-form" onSubmit={submitStory}><label htmlFor="ex-story">{followupPrompt}</label><input autoFocus id="ex-story" value={story} onChange={(event) => setStory(event.target.value)} placeholder="add more evidence" /></form><button type="button" onClick={startOver}>roast another ex</button></section>}
+      {status === "complete" && <section className="response result" aria-live="polite"><p className="result-name">the looksmaxxing tribunal has reviewed both submissions</p><h1>{roast}</h1><button type="button" onClick={startOver}>compare two more</button></section>}
       {status === "final" && <section className="response result" aria-live="polite"><p className="result-name">{submittedName}</p><h1>{followupRoast}</h1><button type="button" onClick={startOver}>rate another ex</button></section>}
     </main>
   );

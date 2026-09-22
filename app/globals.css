@@ -18,7 +18,7 @@ button, input { font: inherit; }
 .response p { margin: 0; font-size: 14px; }
 .dots { display: inline-block; margin-top: 18px; letter-spacing: .2em; animation: blink 1s steps(3, end) infinite; }
 .result-name { opacity: .45; margin-bottom: 24px !important; }
-.result h1 { margin: 0 auto 38px; max-width: 510px; font-size: clamp(28px, 5vw, 48px); line-height: 1.05; font-weight: 400; letter-spacing: -.04em; }
+.result h1 { margin: 0 auto 38px; max-width: 510px; white-space: pre-line; font-size: clamp(28px, 5vw, 48px); line-height: 1.05; font-weight: 400; letter-spacing: -.04em; }
 .followup-form { width: min(440px, 100%); margin: 0 auto 28px; display: flex; flex-direction: column; gap: 12px; text-align: left; }
 .followup-form label { font-size: 12px; }
 .followup-form input { width: 100%; border: 0; border-bottom: 1px solid var(--black); outline: 0; background: transparent; color: var(--black); padding: 9px 0 12px; font-size: 16px; }
