@@ -45,6 +45,14 @@ const userTeases = [
   "Not victim-blaming you, just lovingly asking: was the red flag collection part of the aesthetic? 😭🚩",
   "Your heart is not a rehabilitation center, babe. Stop adopting emotionally unemployed projects. 🪦"
 ];
+const defaultOffenses = [
+  "showing up with the emotional depth of a parking ticket",
+  "turning basic decency into an extreme sport",
+  "treating your patience like an unlimited free trial",
+  "bringing bargain-bin villainy to a relationship that needed honesty",
+  "making selfishness look like a full-time fucking profession",
+  "leaving a trail of bad choices and calling it personal growth"
+];
 
 function composeRoast(name, story, usedRoasts) {
   const [emoji, voice, verdict, defense] = roastStyles[Math.floor(Math.random() * roastStyles.length)];
@@ -58,7 +66,7 @@ function composeRoast(name, story, usedRoasts) {
       ? "cheating like a cowardly little fuck"
       : lowerStory.includes("text") || lowerStory.includes("ghost")
         ? "vanishing and reappearing like a bitch with a push notification"
-        : "weaponizing their bullshit like it is a goddamn career";
+        : defaultOffenses[Math.floor(Math.random() * defaultOffenses.length)];
   const moralStandard = lowerStory.includes("lie") || lowerStory.includes("cheat")
     ? "basic honesty and loyalty"
     : lowerStory.includes("hit") || lowerStory.includes("hurt") || lowerStory.includes("scare")
@@ -71,7 +79,7 @@ function composeRoast(name, story, usedRoasts) {
   const storyReceipt = story.trim() ? `You said: “${story.trim().slice(0, 90)}${story.trim().length > 90 ? "…" : ""}”` : "Your story is already enough evidence";
   const nameCandidates = [
     `${emoji}${reactions} ${voice.toUpperCase()}: ${name} is ${offense}. ${spiral}—${verdict}. ${defense}. I am taking your side, period.`,
-    `${emoji}${reactions} ahhh hell no — ${name} is ${offense}, then acting shocked when you stopped giving a fuck. ${spiral}. ${verdict}. Your peace is protected here.`,
+    `${emoji}${reactions} oh absolutely the fuck not — ${name} is ${offense}, then acting shocked when you stopped giving a fuck. ${spiral}. ${verdict}. Your peace is protected here.`,
     `${emoji}${reactions} breaking news: ${name} is ${offense}. What a motherfucking spectacle—no, genuinely, what the actual fuck. ${verdict}; ${defense}.`,
     `${emoji}${reactions} emergency ruling: ${name} is ${offense}. Dead on arrival, buried under their own bullshit—buried, sealed, no return address. ${defense}. 🪦`
   ];
